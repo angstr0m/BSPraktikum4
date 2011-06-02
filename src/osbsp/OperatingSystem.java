@@ -365,6 +365,7 @@ public class OperatingSystem {
 	 * @return Den entsprechenden Offset zur Berechnung der realen Adresse
 	 */
 	private int getOffset(int virtAdr) {
+            
       		int offset = virtAdr % PAGE_SIZE; // Offset berechnen. Durch den Modulo-Operator bleibt nur der Offset über.
                 
                 return offset;
