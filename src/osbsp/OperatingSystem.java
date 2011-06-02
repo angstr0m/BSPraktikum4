@@ -353,7 +353,8 @@ public class OperatingSystem {
 	 * @return Die entsprechende virtuelle Seitennummer
 	 */
 	private int getVirtualPageNum(int virtAdr) {
-                int pagenum = virtAdr << 0x0FFF;
+                int pagenum = virtAdr >> 12;
+                
                 return pagenum;
 	}
 
