@@ -42,7 +42,7 @@ public class SimulationEnv {
 		// ------------------------- Parameter setzen
 		// ----------------------------------------------
 		// Dauer der Simulation in ms
-		simulationTime = 20000;
+		simulationTime = 10000;
 		// max. Anzahl Seiten pro Prozess im Hauptspeicher (sonst Verdr�ngung eigener Seiten)
 		os.setMAX_RAM_PAGES_PER_PROCESS(10); 
 		// os.CLOCK oder os.FIFO oder os.RANDOM
@@ -51,7 +51,7 @@ public class SimulationEnv {
 		os.setDEFAULT_LOCALITY_FACTOR(1); 
 
 		// Testausgaben erw�nscht? Wenn true, dann Dauer auf max. 100 ms setzen!
-		os.setTEST(true); 
+		os.setTEST(false); 
 
 		// ------------------------- Parameter setzen Ende
 		// ------------------------------------------

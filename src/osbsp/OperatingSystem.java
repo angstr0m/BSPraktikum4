@@ -353,7 +353,8 @@ public class OperatingSystem {
 	 * @return Die entsprechende virtuelle Seitennummer
 	 */
 	private int getVirtualPageNum(int virtAdr) {
-                int pagenum = virtAdr >> 12;
+
+                int pagenum = virtAdr / PAGE_SIZE; // Virtuelle Seite errechnen. Offset wird automatisch abgeschnitten. 
                 
                 return pagenum;
 	}
@@ -364,10 +365,9 @@ public class OperatingSystem {
 	 * @return Den entsprechenden Offset zur Berechnung der realen Adresse
 	 */
 	private int getOffset(int virtAdr) {
-      		int bitmask = 0x0FFF; // 12 Einsen am Ende.
-                int offset = bitmask & virtAdr; // Die letzten 12 Bit sind der Offset.
+      		int offset = virtAdr % PAGE_SIZE; // Offset berechnen. Durch den Modulo-Operator bleibt nur der Offset über.
                 
-                return bitmask;
+                return offset;
 	}
 
 	/**
