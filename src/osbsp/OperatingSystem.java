@@ -41,6 +41,8 @@ public class OperatingSystem {
 	// 2^8 Byte = 256 Byte Seitengr��e --> max. 2^8 = 256 Seitenrahmen , 64
 	// Worte pro Seitenrahmen
 	private static final int PAGE_SIZE = 256;
+        // logarithmus PAGE_SIZE, Potenz
+        private static final int PAGE_SIZE_POTENZ = (int)lb(PAGE_SIZE);
 	// Virtueller Adressraum: 2^20 Byte = 1 MByte (max. virt. Adresse)
 	private static final int VIRT_ADR_SPACE = 1048576;
 
@@ -103,7 +105,7 @@ public class OperatingSystem {
 	// ------------------------- Public-Methoden ---------------------------
 	/**
 	 * Konstruktor
-	 */
+	 */        
 	public OperatingSystem() {
 		// RAM initialisieren (Zugriffe erfolgen wortweise!)
 		physRAM = new Hashtable<Integer, Integer>(RAM_SIZE / WORD_SIZE);
@@ -335,7 +337,12 @@ public class OperatingSystem {
 		eventLog.incrementReadAccesses();
 		return item;
 	}
-
+        
+        private static double lb( double x ) 
+        { 
+            return Math.log( x ) / Math.log( 2.0 ); 
+        }
+        
 	// --------------- Private Methoden des Betriebssystems
 	// ---------------------------------
 
@@ -353,8 +360,10 @@ public class OperatingSystem {
 	 * @return Die entsprechende virtuelle Seitennummer
 	 */
 	private int getVirtualPageNum(int virtAdr) {
-
-                int pagenum = virtAdr / PAGE_SIZE; // Virtuelle Seite errechnen. Offset wird automatisch abgeschnitten. 
+                    
+                int pagenum = virtAdr >> PAGE_SIZE_POTENZ;
+                
+                //int pagenum = virtAdr / PAGE_SIZE; // Virtuelle Seite errechnen. Offset wird automatisch abgeschnitten. 
                 
                 return pagenum;
 	}
@@ -365,8 +374,9 @@ public class OperatingSystem {
 	 * @return Den entsprechenden Offset zur Berechnung der realen Adresse
 	 */
 	private int getOffset(int virtAdr) {
-            
-      		int offset = virtAdr % PAGE_SIZE; // Offset berechnen. Durch den Modulo-Operator bleibt nur der Offset über.
+                
+                int offset = virtAdr & (int)(Math.pow(2, PAGE_SIZE_POTENZ));
+      		//int offset = virtAdr % PAGE_SIZE; // Offset berechnen. Durch den Modulo-Operator bleibt nur der Offset über.
                 
                 return offset;
 	}
